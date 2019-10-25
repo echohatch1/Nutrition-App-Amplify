@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "nutritionappamplify-dev-20191016154023-authRole",
+            "UnauthRoleArn": "arn:aws:iam::134543532480:role/nutritionappamplify-dev-20191016154023-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::134543532480:role/nutritionappamplify-dev-20191016154023-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "nutritionappamplify-dev-20191016154023-deployment",
+            "UnauthRoleName": "nutritionappamplify-dev-20191016154023-unauthRole",
+            "StackName": "nutritionappamplify-dev-20191016154023",
+            "StackId": "arn:aws:cloudformation:us-west-2:134543532480:stack/nutritionappamplify-dev-20191016154023/8ffd7cd0-f05d-11e9-a1ca-0678f540705a"
+        },
+        "categories": {
+            "auth": {
+                "nutritionappamplify6e4658c8": {}
+            }
+        }
+    }
+}

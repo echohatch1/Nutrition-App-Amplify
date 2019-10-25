@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"nutritionappamplify6e4658c8": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}
