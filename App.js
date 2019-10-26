@@ -5,6 +5,10 @@ import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, TouchableOpacity  } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';
 import { Icon } from 'native-base'
+// Amplify imports and config
+import Amplify from '@aws-amplify/core'
+import config from './aws-exports'
+Amplify.configure(config)
 
 
 //import AppNavigator from './navigation/AppNavigator';

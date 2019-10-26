@@ -1,9 +1,8 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
   View,
   Text,
-  AsyncStorage,
   TouchableOpacity,
   TouchableWithoutFeedback,
   SafeAreaView,
@@ -13,12 +12,18 @@ import {
   Alert,
   Animated,
 } from 'react-native'
+
+import { Ionicons } from '@expo/vector-icons';
+
 import {
   Container,
   Item,
-  Input,
-  Icon
+  Input
 } from 'native-base'
+
+// AWS Amplify modular import
+import Auth from '@aws-amplify/auth'
+
 // Load the app logo
 const logo = require('../assets/images/logo.png')
 
@@ -27,43 +32,56 @@ export default class SignInScreen extends React.Component {
     username: '',
     password: '',
     fadeIn: new Animated.Value(0),
-    fadeOut: new Animated.Value(0),
-    isHidden: false
+    fadeOut: new Animated.Value(0),  
+    isHidden: false,
   }
-
   componentDidMount() {
     this.fadeIn()
   }
   fadeIn() {
     Animated.timing(
-    this.state.fadeIn,
-    {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true
-    }
+      this.state.fadeIn,
+      {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+      }
     ).start()
     this.setState({isHidden: true})
   }
   fadeOut() {
     Animated.timing(
-    this.state.fadeOut,
-    {
-      toValue: 0, // 1 in the SignInScreen component
-      duration: 700,
-      useNativeDriver: true
-    }
+      this.state.fadeOut,
+      {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+      }
     ).start()
     this.setState({isHidden: false})
   }
-  
   onChangeText(key, value) {
-    this.setState({[key]: value})
+    this.setState({
+      [key]: value
+    })
   }
-
-  signIn = async () => {
-    await AsyncStorage.setItem('userToken', '123456789')
-      this.props.navigation.navigate('Authloading')
+  // Sign in users with Auth
+  async signIn() {
+    const { username, password } = this.state
+    await Auth.signIn(username, password)
+    .then(user => {
+      this.setState({ user })
+      this.props.navigation.navigate('AuthLoading')
+    })
+    .catch(err => {
+      if (! err.message) {
+        console.log('Error when signing in: ', err)
+        Alert.alert('Error when signing in: ', err)
+      } else {
+        console.log('Error when signing in: ', err.message)
+        Alert.alert('Error when signing in: ', err.message)
+      }
+    })
   }
   render() {
     let { fadeOut, fadeIn, isHidden } = this.state
@@ -71,27 +89,27 @@ export default class SignInScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <StatusBar/>
         <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-          <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+          <TouchableWithoutFeedback 
+            style={styles.container} 
+            onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               {/* App Logo */}
-  <View style={styles.logoContainer}>
-    {
-      isHidden ?
-      <Animated.Image source={logo} style={{ opacity: fadeIn }}/>
-      :
-      <Animated.Image 
-        source={logo} 
-        style={{ opacity: fadeOut, width: 113.46, height: 117 }}/>
-    }
-  </View>
+              <View style={styles.logoContainer}>
+                {
+                  isHidden ?
+                  <Animated.Image 
+                      source={logo} 
+                      style={{ opacity: fadeIn, width: 160, height: 167 }}/>
+                  :
+                  <Animated.Image 
+                      source={logo} 
+                      style={{ opacity: fadeOut, width: 120, height: 127 }}/>
+                }
+              </View>
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
-                  <Item rounded style={styles.itemStyle}>
-                    <Icon
-                      active
-                      name='person'
-                      style={styles.iconStyle}
-                    />
+                  <Item style={styles.itemStyle}>
+                    <Ionicons name="ios-person" style={styles.iconStyle} />
                     <Input
                       style={styles.input}
                       placeholder='Username'
@@ -106,12 +124,8 @@ export default class SignInScreen extends React.Component {
                       onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
-                  <Item rounded style={styles.itemStyle}>
-                    <Icon
-                      active
-                      name='lock'
-                      style={styles.iconStyle}
-                    />
+                  <Item style={styles.itemStyle}>
+                    <Ionicons style={styles.iconStyle} name="ios-lock" />
                     <Input
                       style={styles.input}
                       placeholder='Password'
@@ -142,11 +156,10 @@ export default class SignInScreen extends React.Component {
     )
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#aa73b7',
+    backgroundColor: '#5059ae',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -154,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#5a52a5',
+    color: '#fff',
   },
   infoContainer: {
     position: 'absolute',
@@ -166,22 +179,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#aa73b7',
+    backgroundColor: '#5059ae',
   },
   itemStyle: {
     marginBottom: 20,
   },
   iconStyle: {
-    color: '#5a52a5',
-    fontSize: 28,
-    marginLeft: 15
+    color: '#fff',
+    fontSize: 30,
+    marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#667292',
+    backgroundColor: '#b44666',
     padding: 14,
     marginBottom: 20,
-    borderRadius: 24,
+    borderRadius: 3,
   },
   buttonText: {
     fontSize: 18,
