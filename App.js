@@ -25,21 +25,26 @@ import ForgetPasswordScreen from './screens/ForgetPasswordScreen'
 
 // App stack screen imports
 import HomeScreen from './screens/HomeScreen';
+import MealsScreen from './screens/MealsScreen'
+import MoodScreen from './screens/MoodScreen'
 import SettingsScreen from './screens/SettingsScreen';
-import ProfileScreen from './screens/ProfileScreen';
+import ProgressScreen from './screens/ProgressScreen';
 
 
 // App tabs located at the bottom of the screen
 const AppTabNavigator = createBottomTabNavigator({
-  Home: {
+  Food: {
     screen: HomeScreen
   },
-  Profile: {
-    screen: ProfileScreen
+  Progress: {
+    screen: ProgressScreen
   },
-  Settings: {
-    screen: SettingsScreen
-  }
+  Meals: {
+    screen: MealsScreen
+  },
+  Mood: {
+    screen: MoodScreen
+  },
 })
 
 // Making the common header title dynamic in AppTabNavigator
@@ -69,10 +74,8 @@ const AppStackNavigator = createStackNavigator({
 
 // App stack for the drawer
 const AppDrawerNavigator = createDrawerNavigator({
-  Tabs: AppStackNavigator,
-  Home: HomeScreen,
-  Profile: ProfileScreen,
-  Settings: SettingsScreen
+  Menu: AppStackNavigator,
+  Profile: SettingsScreen
 })
 
 // Auth stack

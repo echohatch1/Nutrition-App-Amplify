@@ -15,7 +15,8 @@ import {
 import {
   Container,
   Item,
-  Input
+  Input,
+  Header
 } from 'native-base'
 
 import { Ionicons } from '@expo/vector-icons';

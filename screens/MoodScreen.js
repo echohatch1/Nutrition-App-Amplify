@@ -5,7 +5,7 @@ import {
   Text,
 } from 'react-native'
 
-export default class ProfileScreen extends React.Component {
+export default class MoodScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}> 
