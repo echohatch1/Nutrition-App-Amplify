@@ -4,10 +4,8 @@ import {
   View,
   Text,
   Dimensions,
-  TouchableOpacity,
-
 } from 'react-native'
-import { Container, Header, Content, Accordion, Item, Button } from "native-base";
+import { Container, Header, Content, Accordion, Button } from "native-base";
 import {
   LineChart,
   BarChart,
@@ -16,7 +14,6 @@ import {
   ContributionGraph,
   StackedBarChart
 } from "react-native-chart-kit";
-import { Ionicons } from '@expo/vector-icons';
 
 
 const dataArray = [
@@ -33,7 +30,8 @@ Auth.currentAuthenticatedUser({
 }).then(user => console.log(user.attributes.email))
 .catch(err => console.log(err));
 
-export default class HomeScreen extends React.Component {
+export default class AddFoodScreen extends React.Component {
+
   render() {
 
     return (
@@ -94,20 +92,7 @@ export default class HomeScreen extends React.Component {
           <Accordion dataArray={dataArray} icon="add" expandedIcon="remove" />
         </Content>
 
-        <TouchableOpacity
-        rounded
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-              }}
-                onPress={() => this.props.navigation.navigate('AddFood')}
-                >
-                
-            <Ionicons name="ios-add-circle" style={styles.iconStyle} />
-                    
-        </TouchableOpacity>
+        {/* <Text>{loggedIn}</Text> */}
       </Container>
     )
   }
@@ -124,16 +109,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 10,
     color: '#fff'
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    backgroundColor: '#b44666',
-    padding: 14,
-    marginBottom: 10,
-    borderRadius: 3,
-  },
-  iconStyle: {
-    color: '#b44666',
-    fontSize: 70,
-  },
+  }
 })

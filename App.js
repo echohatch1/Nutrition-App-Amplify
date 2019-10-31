@@ -29,6 +29,7 @@ import MealsScreen from './screens/MealsScreen'
 import MoodScreen from './screens/MoodScreen'
 import SettingsScreen from './screens/SettingsScreen';
 import ProgressScreen from './screens/ProgressScreen';
+import AddFoodScreen from './screens/AddFoodScreen'
 
 
 // App tabs located at the bottom of the screen
@@ -107,12 +108,25 @@ const AuthStackNavigator = createStackNavigator({
   },
 })
 
+//food stack
+// const FoodStackNavigator = createStackNavigator({
+//   Food: {
+//     screen: Food
+//   },
+//   AddFood: {
+//     screen: AddFoodScreen,
+//   },
+  
+// })
+
 const App = createSwitchNavigator({
   // screen: name
   AuthLoading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // Auth stack
   App: AppDrawerNavigator, // the App stack
+  //Food: FoodStackNavigator, //food stack
 })
+
 export default createAppContainer(App);
 
 const styles = StyleSheet.create({
