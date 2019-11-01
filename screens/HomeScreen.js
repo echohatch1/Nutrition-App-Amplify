@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 
 } from 'react-native'
-import { Container, Header, Content, Accordion, Item, Button } from "native-base";
+import { Container, Header, Content, Accordion, Item, Button, Icon, Grid, Row, Col } from "native-base";
 import {
   LineChart,
   BarChart,
@@ -94,13 +94,20 @@ export default class HomeScreen extends React.Component {
           <Accordion dataArray={dataArray} icon="add" expandedIcon="remove" />
         </Content>
 
+   
+
+        <View style={{
+ 
+        flexDirection: 'row',
+        flexWrap: "nowrap",
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+
+      }}>
         <TouchableOpacity
         rounded
               style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                alignItems: 'center',
+                width: 70
               }}
                 onPress={() => this.props.navigation.navigate('AddFood')}
                 >
@@ -108,6 +115,11 @@ export default class HomeScreen extends React.Component {
             <Ionicons name="ios-add-circle" style={styles.iconStyle} />
                     
         </TouchableOpacity>
+        </View>
+
+ 
+
+
       </Container>
     )
   }
@@ -135,5 +147,6 @@ const styles = StyleSheet.create({
   iconStyle: {
     color: '#b44666',
     fontSize: 70,
+    alignSelf: "center"
   },
 })

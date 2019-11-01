@@ -1,6 +1,6 @@
 // import { AppLoading } from 'expo';
 // import { Asset } from 'expo-asset';
-// import * as Font from 'expo-font';
+import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, TouchableOpacity  } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';
@@ -30,6 +30,7 @@ import MoodScreen from './screens/MoodScreen'
 import SettingsScreen from './screens/SettingsScreen';
 import ProgressScreen from './screens/ProgressScreen';
 import AddFoodScreen from './screens/AddFoodScreen'
+import FoodSearchScreen from './screens/FoodSearchScreen'
 
 
 // App tabs located at the bottom of the screen
@@ -70,7 +71,29 @@ const AppStackNavigator = createStackNavigator({
         </TouchableOpacity>
       )
     })
-  }
+  },
+  //add routes not in a navigator
+  AddFood: {
+    screen: AddFoodScreen,
+    navigationOptions: () => ({
+      title: `Add Food`, // for the header screen
+      headerBackTitle: 'Back'
+    }),
+  },
+  Profile: { 
+    screen: SettingsScreen,
+    navigationOptions: () => ({
+      title: `Profile`, // for the header screen
+      headerBackTitle: 'Back'
+    }),
+  },
+  FoodSearch: {
+    screen: FoodSearchScreen,
+    navigationOptions: () => ({
+      title: `Food Search`, // for the header screen
+      headerBackTitle: 'Back'
+    }),
+  },
 })
 
 // App stack for the drawer
@@ -108,23 +131,12 @@ const AuthStackNavigator = createStackNavigator({
   },
 })
 
-//food stack
-// const FoodStackNavigator = createStackNavigator({
-//   Food: {
-//     screen: Food
-//   },
-//   AddFood: {
-//     screen: AddFoodScreen,
-//   },
-  
-// })
 
 const App = createSwitchNavigator({
   // screen: name
   AuthLoading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // Auth stack
   App: AppDrawerNavigator, // the App stack
-  //Food: FoodStackNavigator, //food stack
 })
 
 export default createAppContainer(App);

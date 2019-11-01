@@ -9,7 +9,7 @@ export default class ProgressScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}> 
-        <Text style={styles.textStyle}>Profile</Text>
+        <Text style={styles.textStyle}>Coming Soon!</Text>
       </View>
     )
   }
