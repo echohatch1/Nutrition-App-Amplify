@@ -10,7 +10,7 @@ import {
   import { AppLoading } from "expo";
   import * as Font from "expo-font";
 
-export default class FoodSearchScreen extends Component {
+export default class FoodSelectScreen extends Component {
 
     constructor(props){
         super(props);
@@ -76,6 +76,7 @@ export default class FoodSearchScreen extends Component {
           style={styles.button}>
             <Text>Search</Text>
           </Button>
+
           </View>
 
         

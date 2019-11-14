@@ -1,6 +1,7 @@
 // import { AppLoading } from 'expo';
 // import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
+//import * as Font from 'expo-font';
+import { Font } from "expo";
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, TouchableOpacity  } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';

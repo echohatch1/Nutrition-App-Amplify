@@ -29,7 +29,7 @@ export default class AddFoodScreen extends React.Component {
       <Container>
       <Content>
 
-          <Button onPress={() => this.props.navigation.navigate('FoodSearch')} placeholder='Rounded Textbox'><Text>Search</Text></Button>
+          <Button block onPress={() => this.props.navigation.navigate('FoodSearch')}><Text>Search</Text></Button>
 
       </Content>
     </Container>
