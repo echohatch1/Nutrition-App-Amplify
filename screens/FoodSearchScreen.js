@@ -15,8 +15,7 @@ export default class FoodSearchScreen extends Component {
     constructor(props){
         super(props);
         this.state ={
-          //isLoading: true,
-          dataSource: "",
+          dataSource: {},
           text: "",
           loading: true
         }
@@ -30,24 +29,36 @@ export default class FoodSearchScreen extends Component {
         this.setState({ loading: false });
         }
 
-    runSearch() {
-        return fetch('https://api.nal.usda.gov/ndb/search/?format=json&q=' + this.state.text + '&sort=r&max=25&offset=0&api_key=0vYyrRRYRLFRydJGAX6Pz84zcmWHePdo8sQDnc7V&ds=')
-        .then((response) => response.json())
-        .then((responseJson) => {
-    
+ runSearch() {
+
+
+      fetch('https://api.nal.usda.gov/fdc/v1/search?api_key=vnKItzFf17lhnUSV6R735i5ZOSRhordRwIXaWIHG', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "generalSearchInput": this.state.text,
+          "pageNumber":"1",
+        }),
+      }).then((response) => response.json())
+          .then((responseJson) => {
+
             this.setState({
-              //isLoading: false,
-              dataSource: responseJson.list,
-            }, function(){
-    
-            });
-    
-    
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
-      }
+              dataSource: responseJson,
+              
+          })
+          
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+
+
+
+    }
+
   render() {
     
     if (this.state.loading) {
@@ -78,28 +89,24 @@ export default class FoodSearchScreen extends Component {
           </Button>
           </View>
 
-        
         <Card>
             <CardItem header bordered>
               <Text>Results</Text>
             </CardItem>
       <FlatList
-        data={this.state.dataSource.item}
-        // renderItem={({item}) => <Text>{item.name}, {item.ndbno}</Text>}
+        data={this.state.dataSource.foods}
         renderItem={({item}) => <CardItem bordered>
         <Body>
           <Text>
-          {item.name}, {item.ndbno}
+          {item.description}, {item.brandOwner} {item.fdcId}
           </Text>
         </Body>
       </CardItem>}
-        keyExtractor={({ndbno}, index) => ndbno}
-      />
-        
+        keyExtractor={({fdcId}, index) => fdcId}
+      />        
           </Card>
+
         </Content>
-
-
       </Container>
     );
   
