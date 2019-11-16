@@ -32,6 +32,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import ProgressScreen from './screens/ProgressScreen';
 import AddFoodScreen from './screens/AddFoodScreen'
 import FoodSearchScreen from './screens/FoodSearchScreen'
+import FoodSelectScreen from './screens/FoodSelectScreen'
 
 
 // App tabs located at the bottom of the screen
@@ -92,6 +93,13 @@ const AppStackNavigator = createStackNavigator({
     screen: FoodSearchScreen,
     navigationOptions: () => ({
       title: `Food Search`, // for the header screen
+      headerBackTitle: 'Back'
+    }),
+  },
+  FoodSelect: {
+    screen: FoodSelectScreen,
+    navigationOptions: () => ({
+      title: `Food Select`, // for the header screen
       headerBackTitle: 'Back'
     }),
   },

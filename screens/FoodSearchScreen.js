@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body, Text} from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body} from 'native-base';
 import {
     
     View,
     FlatList,
     SafeAreaView,
-    StyleSheet
+    StyleSheet,
+    Text
   } from 'react-native'
   import { AppLoading } from "expo";
   import * as Font from "expo-font";
@@ -22,11 +23,11 @@ export default class FoodSearchScreen extends Component {
       }
 
       async componentWillMount() {
-        await Font.loadAsync({
-        Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
-        Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
-        });
-        this.setState({ loading: false });
+        // await Font.loadAsync({
+        // Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
+        // Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
+        // });
+        // this.setState({ loading: false });
         }
 
  runSearch() {
@@ -54,18 +55,19 @@ export default class FoodSearchScreen extends Component {
           .catch((error) => {
             console.error(error);
           });
-
-
-
     }
+
+   selectFood() {
+    this.props.navigation.navigate('FoodSelect')
+   } 
 
   render() {
     
-    if (this.state.loading) {
-      return (
-          <AppLoading />
-      );
-    }
+    // if (this.state.loading) {
+    //   return (
+    //       <AppLoading />
+    //   );
+    // }
 
     return (
       <Container>
@@ -86,6 +88,10 @@ export default class FoodSearchScreen extends Component {
           <Button onPress={() => this.runSearch()}
           style={styles.button}>
             <Text>Search</Text>
+          </Button>
+          <Button onPress={() => this.selectFood()}
+          style={styles.button}>
+            <Text>Food Details</Text>
           </Button>
           </View>
 
