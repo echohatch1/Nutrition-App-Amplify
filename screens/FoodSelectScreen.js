@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body, Text} from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body,} from 'native-base';
 import {
     
     View,
     FlatList,
     SafeAreaView,
-    StyleSheet
+    StyleSheet,
+    Text
   } from 'react-native'
   import { AppLoading } from "expo";
   import * as Font from "expo-font";
@@ -18,86 +19,187 @@ export default class FoodSelectScreen extends Component {
           //isLoading: true,
           dataSource: "",
           text: "",
-          loading: true
+          loading: true,
+          fdcid: "566851",
+          fat: "",
+          saturatedFat: "",
+          transFat: "",
+          cholesterol: "",
+          sodium: "",
+          carbohydrates: "",
+          fiber: "",
+          protein: "",
+          calcium: "",
+          iron: "",
+          calories: "",
         }
       }
 
       async componentWillMount() {
-        await Font.loadAsync({
-        Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
-        Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
-        });
-        this.setState({ loading: false });
+        // await Font.loadAsync({
+        // Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
+        // Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
+        // });
+        // this.setState({ loading: false });
+
+        fetch('https://api.nal.usda.gov/fdc/v1/' + this.state.fdcid + '?api_key=vnKItzFf17lhnUSV6R735i5ZOSRhordRwIXaWIHG', {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+
+          }).then((response) => response.json())
+              .then((responseJson) => {
+    
+                this.setState({
+                  dataSource: responseJson,
+                  fat: responseJson.labelNutrients.fat.value.toString(),
+                  saturatedFat: responseJson.labelNutrients.saturatedFat.value.toString(),
+                  transFat: responseJson.labelNutrients.transFat.value.toString(),
+                  cholesterol: responseJson.labelNutrients.cholesterol.value.toString(),
+                  sodium: responseJson.labelNutrients.sodium.value.toString(),
+                  carbohydrates: responseJson.labelNutrients.carbohydrates.value.toString(),
+                  fiber: responseJson.labelNutrients.fiber.value.toString(),
+                  protein: responseJson.labelNutrients.protein.value.toString(),
+                  calcium: responseJson.labelNutrients.calcium.value.toString(),
+                  iron: responseJson.labelNutrients.iron.value.toString(),
+                  calories: responseJson.labelNutrients.calories.value.toString(),
+              })
+              //console.log(this.state.fat)
+              })
+              .catch((error) => {
+                console.error(error);
+              });
         }
 
-    runSearch() {
-        return fetch('https://api.nal.usda.gov/ndb/search/?format=json&q=' + this.state.text + '&sort=r&max=25&offset=0&api_key=0vYyrRRYRLFRydJGAX6Pz84zcmWHePdo8sQDnc7V&ds=')
-        .then((response) => response.json())
-        .then((responseJson) => {
-    
-            this.setState({
-              //isLoading: false,
-              dataSource: responseJson.list,
-            }, function(){
-    
-            });
-    
-    
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
-      }
+addFood() {
+  
+}
+          
+
+
   render() {
     
-    if (this.state.loading) {
-      return (
-          <AppLoading />
-      );
-    }
+    // if (this.state.loading) {
+    //   return (
+    //       <AppLoading />
+    //   );
+    // }
 
     return (
       <Container>
 <Content>
 
 <View style={styles.searchHeader}>
-          <Item style={styles.searchBox}>
-            <Icon name="ios-search" />
-            <Input
-            
-            autoFocus
-  onChangeText={(text) => this.setState({text})}
-  value={this.state.text}/>
-            <Icon name="ios-people" />
-          </Item>
-
-          
-          <Button onPress={() => this.runSearch()}
+<Button onPress={() => this.addFood()}
           style={styles.button}>
-            <Text>Search</Text>
+            <Text>Add Food Item</Text>
           </Button>
-
           </View>
 
-        
-        <Card>
+          <Card>
             <CardItem header bordered>
-              <Text>Results</Text>
+              <Text>Nutrition Facts</Text>
+            </CardItem>
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Fat: {this.state.fat}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Saturated Fat: {this.state.saturatedFat}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Trans Fat: {this.state.transFat}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Cholesterol: {this.state.cholesterol}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Sodim: {this.state.sodium}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Carbohydrates: {this.state.carbohydrates}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Fiber: {this.state.fiber}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Protien: {this.state.protein}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Calcium: {this.state.calcium}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Iron: {this.state.iron}
+          </Text>
+        </Body>
+      </CardItem>     
+      <CardItem bordered>
+        <Body>
+          <Text>
+          Calories: {this.state.calories}
+          </Text>
+        </Body>
+      </CardItem>     
+          </Card>
+
+
+          <Card>
+            <CardItem header bordered>
+              <Text>Nutrients</Text>
             </CardItem>
       <FlatList
-        data={this.state.dataSource.item}
-        // renderItem={({item}) => <Text>{item.name}, {item.ndbno}</Text>}
+        data={this.state.dataSource.foodNutrients}
         renderItem={({item}) => <CardItem bordered>
         <Body>
           <Text>
-          {item.name}, {item.ndbno}
+          {item.nutrient.name}, {item.nutrient.rank} {item.nutrient.unitName}
           </Text>
         </Body>
       </CardItem>}
-        keyExtractor={({ndbno}, index) => ndbno}
-      />
-        
+        keyExtractor={({id}, index) => id.toString()}
+      />        
           </Card>
+        
+
         </Content>
 
 
