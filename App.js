@@ -142,6 +142,7 @@ const AuthStackNavigator = createStackNavigator({
 
 
 const App = createSwitchNavigator({
+  
   // screen: name
   AuthLoading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // Auth stack

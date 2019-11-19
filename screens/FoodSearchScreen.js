@@ -18,7 +18,7 @@ export default class FoodSearchScreen extends Component {
         this.state ={
           dataSource: {},
           text: "",
-          loading: true
+          //loading: true
         }
       }
 
