@@ -1,7 +1,7 @@
-// import { AppLoading } from 'expo';
+import { AppLoading } from 'expo';
 // import { Asset } from 'expo-asset';
-//import * as Font from 'expo-font';
-import { Font } from "expo";
+import * as Font from 'expo-font';
+//import { Font } from "expo";
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, TouchableOpacity  } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';
@@ -141,7 +141,7 @@ const AuthStackNavigator = createStackNavigator({
 })
 
 
-const App = createSwitchNavigator({
+const AppNavigator = createSwitchNavigator({
   
   // screen: name
   AuthLoading: AuthLoadingScreen,
@@ -149,7 +149,36 @@ const App = createSwitchNavigator({
   App: AppDrawerNavigator, // the App stack
 })
 
-export default createAppContainer(App);
+
+
+//export default createAppContainer(App);
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state ={
+      loading: true
+    }
+  }
+
+  async componentWillMount() {
+    await Font.loadAsync({
+    Roboto: require("./node_modules/native-base/Fonts/Roboto.ttf"),
+    Roboto_medium: require("./node_modules/native-base/Fonts/Roboto_medium.ttf")
+    });
+    this.setState({ loading: false });
+    }
+
+  render() {
+      if (this.state.loading) {
+        return (
+            <AppLoading />
+        );
+    }
+    return <AppContainer />;
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
