@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body,} from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body, Text} from 'native-base';
 import {
     
     View,
     FlatList,
     SafeAreaView,
     StyleSheet,
-    Text
   } from 'react-native'
-  import { AppLoading } from "expo";
-  import * as Font from "expo-font";
+  //import { AppLoading } from "expo";
+  //import * as Font from "expo-font";
 
 export default class FoodSelectScreen extends Component {
 
     constructor(props){
         super(props);
         this.state ={
-          //isLoading: true,
           dataSource: "",
           text: "",
-          loading: true,
           fdcid: "566851",
           fat: "",
           saturatedFat: "",
@@ -36,11 +33,6 @@ export default class FoodSelectScreen extends Component {
       }
 
       async componentWillMount() {
-        // await Font.loadAsync({
-        // Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
-        // Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
-        // });
-        // this.setState({ loading: false });
 
         fetch('https://api.nal.usda.gov/fdc/v1/' + this.state.fdcid + '?api_key=vnKItzFf17lhnUSV6R735i5ZOSRhordRwIXaWIHG', {
             method: 'GET',
@@ -80,12 +72,6 @@ addFood() {
 
 
   render() {
-    
-    // if (this.state.loading) {
-    //   return (
-    //       <AppLoading />
-    //   );
-    // }
 
     return (
       <Container>
