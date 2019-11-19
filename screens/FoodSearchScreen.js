@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body} from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Content, Card, CardItem, Body, Text} from 'native-base';
 import {
     
     View,
     FlatList,
     SafeAreaView,
     StyleSheet,
-    Text
+    
   } from 'react-native'
-  import { AppLoading } from "expo";
-  import * as Font from "expo-font";
+  //import { AppLoading } from "expo";
+ // import * as Font from "expo-font";
 
 export default class FoodSearchScreen extends Component {
 
@@ -18,17 +18,11 @@ export default class FoodSearchScreen extends Component {
         this.state ={
           dataSource: {},
           text: "",
-          //loading: true
+
         }
       }
 
-      async componentWillMount() {
-        // await Font.loadAsync({
-        // Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
-        // Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
-        // });
-        // this.setState({ loading: false });
-        }
+
 
  runSearch() {
 
@@ -62,12 +56,6 @@ export default class FoodSearchScreen extends Component {
    } 
 
   render() {
-    
-    // if (this.state.loading) {
-    //   return (
-    //       <AppLoading />
-    //   );
-    // }
 
     return (
       <Container>
@@ -108,7 +96,7 @@ export default class FoodSearchScreen extends Component {
           </Text>
         </Body>
       </CardItem>}
-        keyExtractor={({fdcId}, index) => fdcId}
+        keyExtractor={({fdcId}, index) => fdcId.toString()}
       />        
           </Card>
 
