@@ -64,10 +64,10 @@ const actions = [
 
 // App tabs located at the bottom of the screen
 const AppTabNavigator = createBottomTabNavigator({
-  Food: {
-    screen: HomeScreen
+  'My Food': {
+    screen: HomeScreen,
   },
-  Progress: {
+  'My Progress': {
     screen: ProgressScreen
   },
   AddButton: {
@@ -77,27 +77,28 @@ const AppTabNavigator = createBottomTabNavigator({
 			tabBarOnPress: () => {}
 		})
 	},
-  Meals: {
+  'Meal Plan': {
     screen: MealsScreen
   },
-  Mood: {
+  'My Mood': {
     screen: MoodScreen
   }
   
 }, 
 {
   defaultNavigationOptions: ({ navigation }) => ({
+    
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
       let IconComponent = Icon;
       let iconName;
-      if (routeName === 'Food') {
+      if (routeName === 'My Food') {
         iconName = "clipboard";
-      } else if (routeName === 'Progress') {
+      } else if (routeName === 'My Progress') {
         iconName = "trending-down";
-      } else if (routeName === 'Meals') {
+      } else if (routeName === 'Meal Plan') {
         iconName = "basket";
-      } else if (routeName === 'Mood') {
+      } else if (routeName === 'My Mood') {
         iconName = "happy";
       }
       return <Icon name={iconName} style={{color: tintColor, fontSize: 30}} />
@@ -106,15 +107,20 @@ const AppTabNavigator = createBottomTabNavigator({
   tabBarOptions: {
     activeTintColor: '#ff7981',
     inactiveTintColor: 'gray',
-    showLabel: false
+    showLabel: false,
+    style: {height: 75}
   },
+
 }
 )
 
 // Making the common header title dynamic in AppTabNavigator
 AppTabNavigator.navigationOptions = ({ navigation }) => {
+
   let { routeName } =   navigation.state.routes[navigation.state.index]
   let headerTitle = routeName
+  
+
   return {
     headerTitle,
   }
@@ -123,15 +129,33 @@ AppTabNavigator.navigationOptions = ({ navigation }) => {
 const AppStackNavigator = createStackNavigator({
   Header: {
     screen: AppTabNavigator,
+
     // Set the header icon
     navigationOptions: ({navigation}) => ({
+
+            headerStyle: {
+                backgroundColor: '#32d998'
+            },
+      
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
           <View style={{paddingHorizontal: 10}}>
-            <Icon name='md-menu' size={24}/>
+            <Icon name='md-menu' size={24} style={{color:"white"}}/>
           </View>
         </TouchableOpacity>
       ),
+
+      headerTitleStyle: {
+        textAlign: 'center',
+        flexGrow:1,
+        alignSelf:'center',
+        color: "white",
+    },
+
+      headerRight: (
+        <View></View>
+      ),
+
       // headerRight: () => (
       //   <TouchableOpacity
       //     onPress={() => alert('This is a button!')}
@@ -150,7 +174,7 @@ const AppStackNavigator = createStackNavigator({
     screen: AddFoodScreen,
     navigationOptions: () => ({
       title: `Add Food`, // for the header screen
-      headerBackTitle: 'Back'
+      headerBackTitle: 'Back',
     }),
   },
   Profile: { 
@@ -281,7 +305,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     color: '#32d998',
-    fontSize: 50,
+    fontSize: 70,
     alignSelf: "center"
   },
 })
