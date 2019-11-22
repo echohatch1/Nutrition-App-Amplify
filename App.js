@@ -5,7 +5,7 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, TouchableOpacity  } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';
-import { Icon } from 'native-base'
+import { Icon, Root } from 'native-base'
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
@@ -34,6 +34,33 @@ import AddFoodScreen from './screens/AddFoodScreen'
 import FoodSearchScreen from './screens/FoodSearchScreen'
 import FoodSelectScreen from './screens/FoodSelectScreen'
 
+const actions = [
+  {
+    text: "Accessibility",
+    icon: <Icon name="ios-add-circle" />,
+    name: "bt_accessibility",
+    position: 2
+  },
+  {
+    text: "Language",
+    icon: <Icon name="ios-add-circle" />,
+    name: "bt_language",
+    position: 1
+  },
+  {
+    text: "Location",
+    icon: <Icon name="ios-add-circle" />,
+    name: "bt_room",
+    position: 3
+  },
+  {
+    text: "Video",
+    icon: <Icon name="ios-add-circle" />,
+    name: "bt_videocam",
+    position: 4
+  }
+];
+
 
 // App tabs located at the bottom of the screen
 const AppTabNavigator = createBottomTabNavigator({
@@ -43,13 +70,46 @@ const AppTabNavigator = createBottomTabNavigator({
   Progress: {
     screen: ProgressScreen
   },
+  AddButton: {
+		screen: () => null,
+		navigationOptions: () => ({
+			tabBarIcon: (<ActionButton/>),
+			tabBarOnPress: () => {}
+		})
+	},
   Meals: {
     screen: MealsScreen
   },
   Mood: {
     screen: MoodScreen
+  }
+  
+}, 
+{
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => {
+      const { routeName } = navigation.state;
+      let IconComponent = Icon;
+      let iconName;
+      if (routeName === 'Food') {
+        iconName = "clipboard";
+      } else if (routeName === 'Progress') {
+        iconName = "trending-down";
+      } else if (routeName === 'Meals') {
+        iconName = "basket";
+      } else if (routeName === 'Mood') {
+        iconName = "happy";
+      }
+      return <Icon name={iconName} style={{color: tintColor, fontSize: 30}} />
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: '#ff7981',
+    inactiveTintColor: 'gray',
+    showLabel: false
   },
-})
+}
+)
 
 // Making the common header title dynamic in AppTabNavigator
 AppTabNavigator.navigationOptions = ({ navigation }) => {
@@ -71,7 +131,18 @@ const AppStackNavigator = createStackNavigator({
             <Icon name='md-menu' size={24}/>
           </View>
         </TouchableOpacity>
-      )
+      ),
+      // headerRight: () => (
+      //   <TouchableOpacity
+      //     onPress={() => alert('This is a button!')}
+      //     title="Info"
+      //     color="black"
+      //   >
+      //     <View style={{paddingHorizontal: 10}}>
+      //       <Text>Check</Text>
+      //   </View>
+      //   </TouchableOpacity>
+      // ),
     })
   },
   //add routes not in a navigator
@@ -149,10 +220,27 @@ const AppNavigator = createSwitchNavigator({
   App: AppDrawerNavigator, // the App stack
 })
 
-
-
-//export default createAppContainer(App);
 const AppContainer = createAppContainer(AppNavigator);
+
+class ActionButton extends React.Component {
+  render() {
+    return (
+
+      <TouchableOpacity
+      rounded
+            style={{
+              width: 70
+            }}
+              onPress={() => alert("You clicked the add button")}
+              >
+              
+          <Icon name="ios-add-circle" style={styles.iconStyle} />
+                  
+      </TouchableOpacity>
+
+    );
+  }
+}
 
 export default class App extends React.Component {
   constructor(props){
@@ -176,7 +264,11 @@ export default class App extends React.Component {
             <AppLoading />
         );
     }
-    return <AppContainer />;
+    return (
+  
+    <AppContainer />
+
+    );
   }
 }
 
@@ -186,5 +278,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  iconStyle: {
+    color: '#32d998',
+    fontSize: 50,
+    alignSelf: "center"
   },
 })
