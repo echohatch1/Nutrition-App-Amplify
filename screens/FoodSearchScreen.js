@@ -6,6 +6,7 @@ import {
     FlatList,
     SafeAreaView,
     StyleSheet,
+    TouchableOpacity,
     
   } from 'react-native'
   //import { AppLoading } from "expo";
@@ -51,9 +52,9 @@ export default class FoodSearchScreen extends Component {
           });
     }
 
-   selectFood() {
-    this.props.navigation.navigate('FoodSelect')
-   } 
+   selectFood = (fdcid) => {
+    this.props.navigation.navigate('FoodSelect', {fdcid: fdcid})
+   }
 
   render() {
 
@@ -69,18 +70,16 @@ export default class FoodSearchScreen extends Component {
             autoFocus
   onChangeText={(text) => this.setState({text})}
   value={this.state.text}/>
-            <Icon name="ios-people" />
+            <Icon name="pizza" />
           </Item>
 
-          
-          <Button onPress={() => this.runSearch()}
+          <View style={styles.buttonPadder}>
+          <Button block onPress={() => this.runSearch()}
           style={styles.button}>
             <Text>Search</Text>
           </Button>
-          <Button onPress={() => this.selectFood()}
-          style={styles.button}>
-            <Text>Food Details</Text>
-          </Button>
+          </View>
+
           </View>
 
         <Card>
@@ -89,13 +88,20 @@ export default class FoodSearchScreen extends Component {
             </CardItem>
       <FlatList
         data={this.state.dataSource.foods}
-        renderItem={({item}) => <CardItem bordered>
+        renderItem={({item}) => 
+        <TouchableOpacity onPress={() => this.selectFood(item.fdcId)}>
+        <CardItem bordered>
+          
         <Body>
           <Text>
           {item.description}, {item.brandOwner} {item.fdcId}
           </Text>
         </Body>
-      </CardItem>}
+
+      </CardItem>
+      </TouchableOpacity>
+      }
+      
         keyExtractor={({fdcId}, index) => fdcId.toString()}
       />        
           </Card>
@@ -115,5 +121,8 @@ const styles = StyleSheet.create({
   searchBox: {
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  buttonPadder: {
+    padding: 10
   }
 })
