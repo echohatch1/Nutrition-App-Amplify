@@ -6,10 +6,11 @@ import {
   Text,
   Dimensions,
   TextInput,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native'
 import {Container, Drawer, Header, Body, Left, Right,
-  Button, Icon, Title, Footer, FooterTab, Content, Badge } from "native-base";
+  Button, Icon, Title, Footer, FooterTab, Content, Badge, Item } from "native-base";
 
 
 // AWS Amplify modular import
@@ -28,9 +29,14 @@ export default class AddFoodScreen extends React.Component {
     return (
       <Container>
       <Content>
-
-          <Button block onPress={() => this.props.navigation.navigate('FoodSearch')}><Text>Search</Text></Button>
-
+        <View>
+          <Item style={{padding: 10}}>
+          <TouchableOpacity style={styles.searchBox} onPress={() => this.props.navigation.navigate('FoodSearch')}>
+                <Icon name="ios-search" />
+                <Text>   Search</Text>
+            </TouchableOpacity>
+          </Item>
+          </View>
       </Content>
     </Container>
     )
@@ -49,5 +55,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 10,
     color: '#fff'
-  }
+  },
+  searchBox: {
+    padding: 10,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "100%"
+  },
 })
