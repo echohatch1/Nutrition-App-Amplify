@@ -3,9 +3,9 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 //import { Font } from "expo";
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text, TouchableOpacity  } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, TouchableOpacity } from 'react-native';
 //import { Ionicons } from '@expo/vector-icons';
-import { Icon, Root } from 'native-base'
+import { Icon, Container, Button, Text, Row, Left } from 'native-base'
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
@@ -17,6 +17,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import Modal from "react-native-modal";
+import NavigationService from './navigation/NavigationService';
 
 import AuthLoadingScreen from './screens/AuthLoadingScreen'
 import WelcomeScreen from './screens/WelcomeScreen'
@@ -34,33 +36,6 @@ import AddFoodScreen from './screens/AddFoodScreen'
 import FoodSearchScreen from './screens/FoodSearchScreen'
 import FoodSelectScreen from './screens/FoodSelectScreen'
 
-const actions = [
-  {
-    text: "Accessibility",
-    icon: <Icon name="ios-add-circle" />,
-    name: "bt_accessibility",
-    position: 2
-  },
-  {
-    text: "Language",
-    icon: <Icon name="ios-add-circle" />,
-    name: "bt_language",
-    position: 1
-  },
-  {
-    text: "Location",
-    icon: <Icon name="ios-add-circle" />,
-    name: "bt_room",
-    position: 3
-  },
-  {
-    text: "Video",
-    icon: <Icon name="ios-add-circle" />,
-    name: "bt_videocam",
-    position: 4
-  }
-];
-
 
 // App tabs located at the bottom of the screen
 const AppTabNavigator = createBottomTabNavigator({
@@ -73,7 +48,7 @@ const AppTabNavigator = createBottomTabNavigator({
   AddButton: {
 		screen: () => null,
 		navigationOptions: () => ({
-			tabBarIcon: (<ActionButton/>),
+			tabBarIcon: (<ActionButton />),
 			tabBarOnPress: () => {}
 		})
 	},
@@ -175,27 +150,79 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: `Add Food`, // for the header screen
       headerBackTitle: 'Back',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#32d998'
+    },
+      headerTitleStyle: {
+        textAlign: 'center',
+        flexGrow:1,
+        alignSelf:'center',
+        color: "white",
+    },
+    headerRight: (
+      <View></View>
+    ),
     }),
   },
   Profile: { 
     screen: SettingsScreen,
     navigationOptions: () => ({
       title: `Profile`, // for the header screen
-      headerBackTitle: 'Back'
+      headerBackTitle: 'Back',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#32d998'
+    },
+      headerTitleStyle: {
+        textAlign: 'center',
+        flexGrow:1,
+        alignSelf:'center',
+        color: "white",
+    },
+    headerRight: (
+      <View></View>
+    ),
     }),
   },
   FoodSearch: {
     screen: FoodSearchScreen,
     navigationOptions: () => ({
       title: `Food Search`, // for the header screen
-      headerBackTitle: 'Back'
+      headerBackTitle: 'Back',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#32d998'
+    },
+      headerTitleStyle: {
+        textAlign: 'center',
+        flexGrow:1,
+        alignSelf:'center',
+        color: "white",
+    },
+    headerRight: (
+      <View></View>
+    ),
     }),
   },
   FoodSelect: {
     screen: FoodSelectScreen,
     navigationOptions: () => ({
       title: `Food Select`, // for the header screen
-      headerBackTitle: 'Back'
+      headerBackTitle: 'Back',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#32d998'
+    },
+      headerTitleStyle: {
+        textAlign: 'center',
+        flexGrow:1,
+        alignSelf:'center',
+        color: "white",
+    },
+    headerRight: (
+      <View></View>
+    ),
     }),
   },
 })
@@ -247,32 +274,187 @@ const AppNavigator = createSwitchNavigator({
 const AppContainer = createAppContainer(AppNavigator);
 
 class ActionButton extends React.Component {
+  state = {
+    isModalVisible: false
+  };
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
   render() {
     return (
-
+<View>
       <TouchableOpacity
       rounded
             style={{
               width: 70
             }}
-              onPress={() => alert("You clicked the add button")}
+            onPress={this.toggleModal}
               >
               
           <Icon name="ios-add-circle" style={styles.iconStyle} />
                   
       </TouchableOpacity>
+      <Modal isVisible={this.state.isModalVisible}>
+      <View style={{ flexDirection: 'column', justifyContent: 'flex-end'}}>
+
+<View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'stretch'}}>
+      <TouchableOpacity
+   style={{
+    flex: 1,
+    flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+       paddingLeft: 15,
+       paddingRight: 15,
+       paddingTop: 25,
+       paddingBottom: 25,
+        marginTop: 5,
+        marginBottom: 5,
+        marginRight: 5,
+       backgroundColor:'#32d998',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Exercise</Text>
+   <Icon name="add" style={{ fontSize: 30, color: 'white'}} />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+   style={{
+      flex: 1,
+        flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 25,
+        paddingBottom: 25,
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 5,
+       backgroundColor:'#32d998',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Mood</Text>
+   <Icon name="add" style={{ fontSize: 30, color: 'white'}} />
+  </TouchableOpacity>
+  </View>
+
+  <View>
+
+        <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate('AddFood')
+          this.toggleModal()
+        }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
+       backgroundColor:'#32d998',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Breakfast</Text>
+   <Icon name="add" style={{ fontSize: 30, color: 'white'}} />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+  onPress={() => {
+    NavigationService.navigate('AddFood')
+    this.toggleModal()
+  }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
+       backgroundColor:'#32d998',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Lunch</Text>
+   <Icon name="add" style={{ fontSize: 30, color: 'white'}} />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+  onPress={() => {
+    NavigationService.navigate('AddFood')
+    this.toggleModal()
+  }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
+       backgroundColor:'#32d998',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Dinner</Text>
+   <Icon name="add" style={{ fontSize: 30, color: 'white'}} />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+  onPress={() => {
+    NavigationService.navigate('AddFood')
+    this.toggleModal()
+  }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
+       backgroundColor:'#32d998',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Snack</Text>
+   <Icon name="add" style={{ fontSize: 30, color: 'white'}} />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+  onPress={this.toggleModal}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'center',
+        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
+       backgroundColor:'#ff7981',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{color: 'white'}}>Close</Text>
+  </TouchableOpacity>
+      </View>
+      </View>
+    </Modal>
+    </View>
 
     );
   }
 }
 
-export default class App extends React.Component {
+export default  class App extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      loading: true
+      loading: true,
     }
   }
+
 
   async componentWillMount() {
     await Font.loadAsync({
@@ -289,9 +471,14 @@ export default class App extends React.Component {
         );
     }
     return (
-  
-    <AppContainer />
 
+<AppContainer 
+ref={navigatorRef => {
+  NavigationService.setTopLevelNavigator(navigatorRef);
+}}
+/>
+
+      
     );
   }
 }
