@@ -74,17 +74,31 @@ export default class FoodSearchScreen extends Component {
           </Item>
 
           <View style={styles.buttonPadder}>
-          <Button block onPress={() => this.runSearch()}
-          style={styles.button}>
-            <Text>Search</Text>
-          </Button>
+
+
+          <TouchableOpacity
+  onPress={() => this.runSearch()}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'center',
+        padding: 15,
+        marginTop: 5,
+        marginBottom: 5,
+       backgroundColor:'#32d998',
+       borderRadius:30,
+     }}
+ >
+   <Text style={{color: 'white'}}>Search</Text>
+  </TouchableOpacity>
+
           </View>
 
           </View>
 
         <Card>
             <CardItem header bordered>
-              <Text>Results</Text>
+              <Text style={{color: "black", fontWeight: "bold"}}>Results</Text>
             </CardItem>
       <FlatList
         data={this.state.dataSource.foods}

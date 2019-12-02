@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import {Container, Drawer, Header, Body, Left, Right,
   Button, Icon, Title, Footer, FooterTab, Content, Badge, Item } from "native-base";
+  import SegmentedControlTab from "react-native-segmented-control-tab";
 
 
 // AWS Amplify modular import
@@ -21,10 +22,25 @@ Auth.currentAuthenticatedUser({
 }).then(user => console.log(user.attributes.email))
 .catch(err => console.log(err));
 
-export default class AddFoodScreen extends React.Component {
 
+
+export default class AddFoodScreen extends React.Component {
+  
+  constructor() {
+    super();
+    this.state = {
+      selectedIndex: 0
+    };
+  }
+  handleIndexChange = index => {
+    this.setState({
+      ...this.state,
+      selectedIndex: index
+    });
+  };
 
   render() {
+    
 
     return (
       <Container>
@@ -36,6 +52,16 @@ export default class AddFoodScreen extends React.Component {
                 <Text>   Search</Text>
             </TouchableOpacity>
           </Item>
+          <SegmentedControlTab
+          values={["Recent", "Favorites"]}
+          borderRadius={0}
+          tabStyle={{height: 60, borderColor: "white"}}
+          tabTextStyle={{color: "grey"}}
+          activeTabTextStyle={{color: "grey"}}
+          activeTabStyle={{backgroundColor: "white", borderBottomColor: "#ff7981", borderBottomWidth: 5}}
+          selectedIndex={this.state.selectedIndex}
+          onTabPress={this.handleIndexChange}
+        />
           </View>
       </Content>
     </Container>

@@ -111,6 +111,28 @@ export default class SignUpScreen extends React.Component {
       console.log(err)
     }
   }
+  //creates a data record on the crud server for the user
+  setUser(email, username) {
+    fetch('https://nutuserscrud.herokuapp.com/user', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "email": email,
+        "username": username,
+      }),
+    }).then((response) => response.json())
+        .then((responseJson) => {
+
+         console.log("Successfully created user data record")
+        
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }
   // Sign up user with AWS Amplify Auth
   async signUp() {
     const { username, password, email, phoneNumber } = this.state
@@ -140,8 +162,10 @@ export default class SignUpScreen extends React.Component {
     const { username, authCode } = this.state
     await Auth.confirmSignUp(username, authCode)
     .then(() => {
+      this.setUser(this.state.email, this.state.username)
       this.props.navigation.navigate('SignIn')
       console.log('Confirm sign up successful')
+      
     })
     .catch(err => {
       if (! err.message) {
