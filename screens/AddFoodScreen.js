@@ -7,10 +7,11 @@ import {
   Dimensions,
   TextInput,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform,
+  StatusBar
 } from 'react-native'
-import {Container, Drawer, Header, Body, Left, Right,
-  Button, Icon, Title, Footer, FooterTab, Content, Badge, Item } from "native-base";
+import {Container, Drawer, Button, Icon, Title, Footer, FooterTab, Content, Badge, Item } from "native-base";
   import SegmentedControlTab from "react-native-segmented-control-tab";
 
 
@@ -25,6 +26,7 @@ Auth.currentAuthenticatedUser({
 
 
 export default class AddFoodScreen extends React.Component {
+
   
   constructor() {
     super();
@@ -43,7 +45,10 @@ export default class AddFoodScreen extends React.Component {
     
 
     return (
-      <Container>
+      <Container 
+      style={styles.container}
+      >
+
       <Content>
         <View>
           <Item style={{padding: 10}}>
@@ -71,10 +76,7 @@ export default class AddFoodScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#5059ae',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#e8e8e8',
   },
   textStyle: {
     fontWeight: 'bold',

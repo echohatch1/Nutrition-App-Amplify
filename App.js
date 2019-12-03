@@ -147,6 +147,7 @@ const AppStackNavigator = createStackNavigator({
   //add routes not in a navigator
   AddFood: {
     screen: AddFoodScreen,
+
     navigationOptions: () => ({
       title: `Add Food`, // for the header screen
       headerBackTitle: 'Back',
@@ -220,9 +221,9 @@ const AppStackNavigator = createStackNavigator({
         alignSelf:'center',
         color: "white",
     },
-    headerRight: (
-      <View></View>
-    ),
+    // headerRight: (
+    //   <View></View>
+    // ),
     }),
   },
 })

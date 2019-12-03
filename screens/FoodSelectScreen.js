@@ -21,18 +21,40 @@ Auth.currentAuthenticatedUser({
 .catch(err => console.log(err));
 
 export default class FoodSelectScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+return {   
+
+  headerRight: () => (
+    <View style={{margin: 3}}>
+                    <TouchableOpacity
+          onPress={navigation.getParam('addFood')}
+          title="Info"
+          color="white"
+        >
+          <View style={{paddingHorizontal: 10}}>
+            <Icon name="checkmark" style={{color: "white"}}/>
+        </View>
+        </TouchableOpacity>
+        </View>
+  ),
+}
+}
 
     constructor(props){
         super(props);
         this.state ={
           fdcid: this.props.navigation.state.params.fdcid,
           dataSource: {},
-          servings: undefined,
-          meal: undefined,
-          repeat: undefined,
-          favorite: undefined,
+          servings: 1,
+          meal: "Breakfast",
+          repeat: false,
+          favorite: false,
         }
       }
+
+      componentDidMount() {
+        this.props.navigation.setParams({ addFood: this._addFood });
+    }
 
       async componentWillMount() {
 
@@ -57,7 +79,7 @@ export default class FoodSelectScreen extends Component {
               });
         }
 
-addFood() {
+_addFood = () => {
 
   fetch('https://nutuserscrud.herokuapp.com/users/email/' + userEmail, {
     method: 'PUT',
@@ -181,8 +203,8 @@ onValueChangeFavorite(value) {
                 selectedValue={this.state.repeat}
                 onValueChange={this.onValueChangeRepeat.bind(this)}
               >
-                <Picker.Item label="No" value="no" />
-                <Picker.Item label="Yes" value="yes" />
+                <Picker.Item label="No" value={false} />
+                <Picker.Item label="Yes" value={true} />
 
               </Picker>
             </Item>
@@ -200,31 +222,11 @@ onValueChangeFavorite(value) {
                 selectedValue={this.state.favorite}
                 onValueChange={this.onValueChangeFavorite.bind(this)}
               >
-                <Picker.Item label="No" value="no" />
-                <Picker.Item label="Yes" value="yes" />
+                <Picker.Item label="No" value={false} />
+                <Picker.Item label="Yes" value={true} />
               </Picker>
             </Item>
             </CardItem>
-
-            <CardItem>
-
-            <TouchableOpacity
-  onPress={() => this.addFood()}
-   style={{
-      flexDirection: 'row',
-       alignItems:'center',
-       justifyContent:'center',
-       width: "100%",
-        padding: 15,
-        marginTop: 5,
-        marginBottom: 5,
-       backgroundColor:'#32d998',
-       borderRadius:30,
-     }}
- >
-   <Text style={{color: 'white'}}>Add to Log</Text>
-  </TouchableOpacity>
-</CardItem>  
 
             </Form>
             </Card>
