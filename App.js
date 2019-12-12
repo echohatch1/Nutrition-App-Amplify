@@ -242,8 +242,8 @@ const AppStackNavigator = createStackNavigator({
 
 // App stack for the drawer
 const AppDrawerNavigator = createDrawerNavigator({
-  Menu: AppStackNavigator,
-  Profile: SettingsScreen
+  Close: AppStackNavigator,
+  Profile: SettingsScreen,
 })
 
 // Auth stack
