@@ -17,7 +17,7 @@ export default class ProgressScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     padding: 10,
-    color: '#fff'
+    color: 'grey'
   }
 })

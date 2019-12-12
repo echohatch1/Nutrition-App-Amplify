@@ -24,42 +24,17 @@ import {
 // AWS Amplify modular import
 import Auth from '@aws-amplify/auth'
 
-// Load the app logo
-const logo = require('../assets/images/logo.png')
 
 export default class SignInScreen extends React.Component {
   state = {
     username: '',
-    password: '',
-    fadeIn: new Animated.Value(0),
-    fadeOut: new Animated.Value(0),  
+    password: '', 
     isHidden: false,
   }
   componentDidMount() {
-    this.fadeIn()
+
   }
-  fadeIn() {
-    Animated.timing(
-      this.state.fadeIn,
-      {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true
-      }
-    ).start()
-    this.setState({isHidden: true})
-  }
-  fadeOut() {
-    Animated.timing(
-      this.state.fadeOut,
-      {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true
-      }
-    ).start()
-    this.setState({isHidden: false})
-  }
+
   onChangeText(key, value) {
     this.setState({
       [key]: value
@@ -84,7 +59,7 @@ export default class SignInScreen extends React.Component {
     })
   }
   render() {
-    let { fadeOut, fadeIn, isHidden } = this.state
+
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar/>
@@ -93,19 +68,7 @@ export default class SignInScreen extends React.Component {
             style={styles.container} 
             onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              {/* App Logo */}
-              <View style={styles.logoContainer}>
-                {
-                  isHidden ?
-                  <Animated.Image 
-                      source={logo} 
-                      style={{ opacity: fadeIn, width: 160, height: 167 }}/>
-                  :
-                  <Animated.Image 
-                      source={logo} 
-                      style={{ opacity: fadeOut, width: 120, height: 127 }}/>
-                }
-              </View>
+
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
                   <Item style={styles.itemStyle}>
@@ -113,15 +76,13 @@ export default class SignInScreen extends React.Component {
                     <Input
                       style={styles.input}
                       placeholder='Username'
-                      placeholderTextColor='#adb4bc'
+                      placeholderTextColor='grey'
                       keyboardType={'email-address'}
                       returnKeyType='next'
                       autoCapitalize='none'
                       autoCorrect={false}
                       onSubmitEditing={(event) => {this.refs.SecondInput._root.focus()}}
                       onChangeText={value => this.onChangeText('username', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   <Item style={styles.itemStyle}>
@@ -129,15 +90,13 @@ export default class SignInScreen extends React.Component {
                     <Input
                       style={styles.input}
                       placeholder='Password'
-                      placeholderTextColor='#adb4bc'
+                      placeholderTextColor='grey'
                       returnKeyType='go'
                       autoCapitalize='none'
                       autoCorrect={false}
                       secureTextEntry={true}
                       ref='SecondInput'
                       onChangeText={value => this.onChangeText('password', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   <TouchableOpacity
@@ -159,7 +118,7 @@ export default class SignInScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -167,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'grey',
   },
   infoContainer: {
     position: 'absolute',
@@ -179,36 +138,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
   },
   itemStyle: {
     marginBottom: 20,
   },
   iconStyle: {
-    color: '#fff',
+    color: 'grey',
     fontSize: 30,
     marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#32d998',
     padding: 14,
     marginBottom: 20,
-    borderRadius: 3,
+    borderRadius: 30,
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: "#fff",
-  },
-  logoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: 400,
-    bottom: 180,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
+    color: "white",
   },
 })

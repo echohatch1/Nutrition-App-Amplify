@@ -302,7 +302,7 @@ export default class SignUpScreen extends React.Component {
                       transparent={false}
                       visible={this.state.modalVisible}>
                       <View style={{ flex: 1 }}>
-                        <View style={{ flex: 10, paddingTop: 80, backgroundColor: '#5059ae' }}>
+                        <View style={{ flex: 10, paddingTop: 80, backgroundColor: '#e8e8e8' }}>
                           <FlatList
                             data={countryData}
                             keyExtractor={(item, index) => index.toString()}
@@ -324,7 +324,7 @@ export default class SignUpScreen extends React.Component {
                                     <Text style={{fontSize: 45}}>
                                       {item.flag}
                                     </Text>
-                                    <Text style={{fontSize: 20, color: '#fff'}}>
+                                    <Text style={{fontSize: 20, color: 'grey'}}>
                                       {item.name} ({item.dial_code})
                                     </Text>
                                   </View>
@@ -394,7 +394,7 @@ export default class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'grey',
   },
   infoContainer: {
     position: 'absolute',
@@ -413,27 +413,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
   },
   itemStyle: {
     marginBottom: 10,
   },
   iconStyle: {
-    color: '#fff',
+    color: 'grey',
     fontSize: 28,
     marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#32d998',
     padding: 14,
     marginBottom: 10,
-    borderRadius: 3,
+    borderRadius: 30,
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: "#fff",
+    color: "white",
   },
   logoContainer: {
     position: 'absolute',
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
   },
   countryStyle: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
     borderTopColor: '#211f',
     borderTopWidth: 1,
     padding: 12,
@@ -462,6 +462,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
     alignItems: 'center', 
-    backgroundColor: '#b44666',
+    backgroundColor: '#32d998',
   }
 })

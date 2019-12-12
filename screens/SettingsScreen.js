@@ -82,8 +82,8 @@ export default class SettingsScreen extends React.Component {
               {/*Infos*/}
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
-                  <View style={[styles.buttonStyle, {borderRadius: 4, marginBottom: 20}]}>
-                    <Text style={styles.buttonText}>Change password</Text>              
+                  <View style={{alignContent: "center"}}>
+                    <Text style={{color: "grey", fontWeight: "bold"}}>Change password</Text>              
                   </View>
                   {/* Old password */}
                   <Item style={styles.itemStyle}>
@@ -117,7 +117,14 @@ export default class SettingsScreen extends React.Component {
                   </Item>
                   <TouchableOpacity
                     onPress={this.changePassword}
-                    style={styles.buttonStyle}>
+                    style={{flexDirection: 'row',
+                    alignItems:'center',
+                    justifyContent:'center',
+                     padding: 15,
+                     marginTop: 5,
+                     marginBottom: 5,
+                    backgroundColor:'#32d998',
+                    borderRadius:30,}}>
                     <Text style={styles.buttonText}>
                       Submit
                     </Text>
@@ -148,7 +155,7 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -156,7 +163,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'grey',
   },
   infoContainer: {
     position: 'absolute',
@@ -167,26 +174,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
   },
   itemStyle: {
     marginTop: 20,
   },
   iconStyle: {
-    color: '#fff',
+    color: 'grey',
     fontSize: 28,
     marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#c4454d',
     padding: 14,
     marginTop: 20,
-    borderRadius: 3,
+    borderRadius: 30,
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: "#fff",
+    color: "white",
   },
 })

@@ -41,7 +41,7 @@ export default class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#aa73b7',
+    backgroundColor: '#32d998',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 18,
-    padding: 10
+    padding: 10,
+    color: "white"
   }
 })

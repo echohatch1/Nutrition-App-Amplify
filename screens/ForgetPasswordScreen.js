@@ -205,7 +205,7 @@ export default class ForgetPasswordScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'grey',
   },
   infoContainer: {
     position: 'relative',
@@ -225,22 +225,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#e8e8e8',
   },
   itemStyle: {
     marginBottom: 20,
   },
   iconStyle: {
-    color: '#fff',
+    color: 'grey',
     fontSize: 28,
     marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#32d998',
     padding: 14,
     marginBottom: 20,
-    borderRadius: 3,
+    borderRadius: 30,
   },
   buttonText: {
     fontSize: 18,
