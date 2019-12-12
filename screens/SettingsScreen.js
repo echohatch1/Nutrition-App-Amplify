@@ -166,10 +166,7 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   infoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: 600,
+
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

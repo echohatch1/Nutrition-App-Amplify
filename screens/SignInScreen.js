@@ -129,11 +129,7 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   infoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: 200,
-    bottom: 25,
+
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

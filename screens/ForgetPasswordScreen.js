@@ -216,11 +216,7 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   infoContainer: {
-    position: 'relative',
-    left: 0,
-    right: 0,
-    height: 200,
-    top: 50,
+
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
