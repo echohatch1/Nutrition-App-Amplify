@@ -62,7 +62,9 @@ export default class FoodSearchScreen extends Component {
       <Container>
 <Content>
 
-<View style={styles.searchHeader}>
+<View>
+
+  <View style={{backgroundColor: "#32d998"}}>
           <Item style={styles.searchBox}>
             <Icon name="ios-search" />
             <Input
@@ -70,8 +72,8 @@ export default class FoodSearchScreen extends Component {
             autoFocus
   onChangeText={(text) => this.setState({text})}
   value={this.state.text}/>
-            <Icon name="pizza" />
           </Item>
+          </View>
 
           <View style={styles.buttonPadder}>
 
@@ -133,8 +135,16 @@ const styles = StyleSheet.create({
     backgroundColor: "blue"
   },
   searchBox: {
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 15,
+    paddingBottom: 0,
+    paddingTop: 0,
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginTop: 15,
+    marginBottom: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    height: 40
   },
   buttonPadder: {
     padding: 10

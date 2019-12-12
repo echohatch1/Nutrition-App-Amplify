@@ -109,7 +109,11 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: ({navigation}) => ({
 
             headerStyle: {
-                backgroundColor: '#32d998'
+                backgroundColor: '#32d998',
+
+            elevation: 0,       // remove shadow on Android
+            shadowOpacity: 0,   
+                
             },
       
       headerLeft: (
@@ -153,7 +157,9 @@ const AppStackNavigator = createStackNavigator({
       headerBackTitle: 'Back',
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#32d998'
+        backgroundColor: '#32d998',
+        elevation: 0,       // remove shadow on Android
+        shadowOpacity: 0,  
     },
       headerTitleStyle: {
         textAlign: 'center',
@@ -173,7 +179,9 @@ const AppStackNavigator = createStackNavigator({
       headerBackTitle: 'Back',
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#32d998'
+        backgroundColor: '#32d998',
+        elevation: 0,       // remove shadow on Android
+            shadowOpacity: 0,  
     },
       headerTitleStyle: {
         textAlign: 'center',
@@ -193,7 +201,9 @@ const AppStackNavigator = createStackNavigator({
       headerBackTitle: 'Back',
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#32d998'
+        backgroundColor: '#32d998',
+        elevation: 0,       // remove shadow on Android
+        shadowOpacity: 0,  
     },
       headerTitleStyle: {
         textAlign: 'center',
@@ -213,7 +223,9 @@ const AppStackNavigator = createStackNavigator({
       headerBackTitle: 'Back',
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#32d998'
+        backgroundColor: '#32d998',
+        elevation: 0,       // remove shadow on Android
+            shadowOpacity: 0,  
     },
       headerTitleStyle: {
         textAlign: 'center',
@@ -239,7 +251,7 @@ const AuthStackNavigator = createStackNavigator({
   Welcome: {
     screen: WelcomeScreen,
     navigationOptions: () => ({
-      title: `Welcome to this App`, // for the header screen
+      title: `Welcome!`, // for the header screen
       headerBackTitle: 'Back'
     }),
   },

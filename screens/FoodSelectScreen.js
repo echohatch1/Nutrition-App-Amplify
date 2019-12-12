@@ -6,7 +6,8 @@ import {
     FlatList,
     SafeAreaView,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
   } from 'react-native'
   //import { AppLoading } from "expo";
   //import * as Font from "expo-font";
@@ -98,7 +99,16 @@ _addFood = () => {
   }).then((response) => response.json())
       .then((responseJson) => {
 
-        console.log("User data saved successfully")
+        Alert.alert(
+          'Food Saved to Log!',
+          'Add Another?',
+          [
+            {text: 'No', onPress: () => this.props.navigation.navigate('My Food')},
+
+            {text: 'Yes', onPress: () => this.props.navigation.navigate('AddFood')},
+          ],
+          {cancelable: false},
+        );
       
       })
       .catch((error) => {

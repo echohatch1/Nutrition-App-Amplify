@@ -5,9 +5,10 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  FlatList
 
 } from 'react-native'
-import { Container, Header, Content, Accordion, Item, Button, Icon, Grid, Row, Col, Footer } from "native-base";
+import { Container, Content, Accordion, Item, Button, Icon, Grid, Row, Col, Card, CardItem, Body } from "native-base";
 import {
   PieChart,
 } from "react-native-chart-kit";
@@ -16,55 +17,256 @@ import {
 // AWS Amplify modular import
 import Auth from '@aws-amplify/auth'
 
+let userEmail  = "";
 
 Auth.currentAuthenticatedUser({
     bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-}).then(user => console.log(user.attributes.email))
+}).then(user => userEmail = user.attributes.email)
 .catch(err => console.log(err));
 
-const dataArray = [
-  { title: "Breakfast", content: "Lorem ipsum dolor sit amet" },
-  { title: "Lunch", content: "Lorem ipsum dolor sit amet" },
-  { title: "Dinner", content: "Lorem ipsum dolor sit amet" },
-  { title: "Snack", content: "Lorem ipsum dolor sit amet" },
-];
+
 
 
 export default class HomeScreen extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.state ={
+      dataSource: undefined,
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+      snack: [],
+      timeStamp: new Date(),
+      setDate: undefined,
+      showBreakfast: false,
+      showLunch: false,
+      showDinner: false,
+      showSnack: false,
+      breakfastIcon: "add",
+      lunchIcon: "add",
+      dinnerIcon: "add",
+      snackIcon: "add",
+    }
+  }
+
+  ShowHideComponent = (meal) => {
+    if (meal == "breakfast") {
+      if (this.state.showBreakfast == true) {
+        this.setState({
+           showBreakfast: false,
+           breakfastIcon: "add"
+          });
+      } else {
+        this.setState({ 
+          showBreakfast: true,
+          breakfastIcon: "remove"
+        });
+      }
+    }
+    
+    if (meal == "lunch") {
+      if (this.state.showLunch == true) {
+        this.setState({ 
+          showLunch: false,
+          lunchIcon: "add"
+        });
+      } else {
+        this.setState({ 
+          showLunch: true,
+          lunchIcon: "remove"
+        });
+      }
+    }
+    if (meal == "dinner") {
+      if (this.state.showDinner == true) {
+        this.setState({ 
+          showDinner: false,
+          dinnerIcon: "add"
+        });
+      } else {
+        this.setState({ 
+          showDinner: true,
+          dinnerIcon: "remove"
+        });
+      }
+    }
+    if (meal == "snack") {
+      if (this.state.showSnack == true) {
+        this.setState({ 
+          showSnack: false,
+          snackIcon: "add"
+        });
+      } else {
+        this.setState({ 
+          showSnack: true,
+          snackIcon: "remove"
+        });
+      }
+    }
+
+  };
+
+  addDays = function(days) {
+    let result = this.state.timeStamp;
+    result.setDate(result.getDate() + days);
+    this.setState ({
+      timeStamp: result
+    })
+    //console.log(this.state.timeStamp)
+    let day = this.state.timeStamp.getDate()
+    let month = this.state.timeStamp.getMonth() + 1;
+    let year = this.state.timeStamp.getFullYear()
+    let fullDate = month + '-' + day + '-' + year
+
+    this.setState ({
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+      snack: [],
+    })
+
+    this.fetchUserData(fullDate)
+    console.log(fullDate)
+    //return result;
+  }
+  subtractDays = function(days) {
+    let result = this.state.timeStamp;
+    result.setDate(result.getDate() - days);
+    this.setState ({
+      timeStamp: result
+    })
+    //console.log(this.state.timeStamp)
+    let day = this.state.timeStamp.getDate()
+    let month = this.state.timeStamp.getMonth() + 1;
+    let year = this.state.timeStamp.getFullYear()
+    let fullDate = month + '-' + day + '-' + year
+
+    this.setState ({
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+      snack: [],
+    })
+
+    this.fetchUserData(fullDate)
+    console.log(fullDate)
+    //return result;
+  }
+
+  sortFood = function () {
+    let breakfastArray = [];
+    let lunchArray = [];
+    let dinnerArray = [];
+    let snackArray = [];
+    let myArray = this.state.dataSource;
+    if (myArray.length > 0) {
+      for (var i=0; i < myArray.length; i++) {
+          if (myArray[i].meal == "breakfast" || myArray[i].meal == "Breakfast") {
+            breakfastArray.push(myArray[i])
+          } else if (myArray[i].meal == "lunch" || myArray[i].meal == "Lunch") {
+            lunchArray.push(myArray[i])
+          } else if (myArray[i].meal == "dinner" || myArray[i].meal == "Dinner") {
+            dinnerArray.push(myArray[i])
+          } else if (myArray[i].meal == "snack" || myArray[i].meal == "Snack") {
+            snackArray.push(myArray[i])
+          }
+      }
+      this.setState({
+        breakfast: breakfastArray,
+        lunch: lunchArray,
+        dinner: dinnerArray,
+        snack: snackArray,
+    })
+      //console.log(this.state.breakfast)
+    }
+  }
+
+  fetchUserData = function (date) {
+    fetch('https://nutuserscrud.herokuapp.com/users/foods/email/' + userEmail + '/date/' + date, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+
+    }).then((response) => response.json())
+        .then((responseJson) => {
+
+          this.setState({
+            dataSource: responseJson,
+            setDate: date
+        })
+        //console.log(this.state.dataSource)
+        this.sortFood()
+        //console.log(date)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }
+
+  async componentWillMount() {
+
+    let day = this.state.timeStamp.getDate()
+    let month = this.state.timeStamp.getMonth() + 1;
+    let year = this.state.timeStamp.getFullYear()
+    let fullDate = month + '-' + day + '-' + year
+
+    this.fetchUserData(fullDate)
+
+    }
 
   render() {
+    let dataArray = [
+      { title: "Breakfast", content: this.state.breakfast.name },
+      { title: "Lunch", content: this.state.lunch.name },
+      { title: "Dinner", content: this.state.dinner.name },
+      { title: "Snack", content: this.state.snack.name },
+    ];
 
     return (
       <Container style={styles.containerStyle}>
         <Content>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10, backgroundColor: "white"}}>
+          <TouchableOpacity onPress={() => {
+          this.subtractDays(1)
+        }}
+        >
+        <Icon name="arrow-back" style={{color: "grey"}}></Icon>
+        </TouchableOpacity>
+
+      <Text style={{fontSize: 18, fontWeight: "bold", color: "grey"}}>{this.state.setDate}</Text>
+
+        <TouchableOpacity onPress={() => {
+          this.addDays(1)
+        }}
+        >
+        <Icon name="arrow-forward" style={{color: "grey"}}></Icon>
+        </TouchableOpacity>
+        </View>
+
 <PieChart
   data={[
     {
-      name: 'Breakfast',
+      name: 'Fat',
       entres: 3,
-      color: 'rgba(131, 167, 234, 1)',
+      color: '#c4454d',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
-      name: 'Lunch',
+      name: 'Calories',
       entres: 2,
-      color: '#F00',
+      color: '#ea6068',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
-      name: 'Snack',
+      name: 'Protien',
       entres: 4,
-      color: '#f5b942',
-      legendFontColor: '#7F7F7F',
-      legendFontSize: 15,
-    },
-    {
-      name: 'Dinner',
-      entres: 5,
-      color: 'rgb(0, 0, 255)',
+      color: '#ff7981',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
@@ -92,7 +294,7 @@ export default class HomeScreen extends React.Component {
 />
         
           
-        <View style={{padding: 15}}>
+        {/* <View style={{padding: 15}}>
 
 
             <Accordion
@@ -106,59 +308,169 @@ export default class HomeScreen extends React.Component {
 
 
 
-          </View>
+          </View> */}
+
+<View style={{padding: 10}}>
+<TouchableOpacity
+        onPress={() => {
+          this.ShowHideComponent('breakfast')
+        }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+       backgroundColor:'white',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{}}>Breakfast</Text>
+   <Icon name={this.state.breakfastIcon} style={{ fontSize: 30,}} />
+  </TouchableOpacity>
+
+  <Card transparent>
+    {this.state.showBreakfast ? (
+  <FlatList
+        data={this.state.breakfast}
+        renderItem={({item}) => 
+        <TouchableOpacity onPress={() => this.selectFood(item.uniqueId)}>
+        <CardItem style={{backgroundColor: "transparent"}}>
+          
+        <Body>
+          <Text>
+          {item.name}
+          </Text>
+        </Body>
+
+      </CardItem>
+      </TouchableOpacity>
+      }
+      
+        keyExtractor={({uniqueId}, index) => uniqueId.toString()}
+      /> ) : null}
+      </Card> 
+
+  <TouchableOpacity
+        onPress={() => {
+          this.ShowHideComponent('lunch')
+        }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+       backgroundColor:'white',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{}}>Lunch</Text>
+   <Icon name={this.state.lunchIcon} style={{ fontSize: 30,}} />
+  </TouchableOpacity>
+
+  <Card transparent>{this.state.showLunch ? (
+  <FlatList
+        data={this.state.lunch}
+        renderItem={({item}) => 
+        <TouchableOpacity onPress={() => this.selectFood(item.uniqueId)}>
+        <CardItem style={{backgroundColor: "transparent"}}>
+          
+        <Body>
+          <Text>
+          {item.name}
+          </Text>
+        </Body>
+
+      </CardItem>
+      </TouchableOpacity>
+      }
+      
+        keyExtractor={({uniqueId}, index) => uniqueId.toString()}
+      /> ) : null}
+      </Card> 
+
+  <TouchableOpacity
+        onPress={() => {
+          this.ShowHideComponent('dinner')
+        }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+       backgroundColor:'white',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{}}>Dinner</Text>
+   <Icon name={this.state.dinnerIcon} style={{ fontSize: 30,}} />
+  </TouchableOpacity>
+
+     <Card transparent>{this.state.showDinner ? (
+  <FlatList
+        data={this.state.dinner}
+        renderItem={({item}) => 
+        <TouchableOpacity onPress={() => this.selectFood(item.uniqueId)}>
+        <CardItem style={{backgroundColor: "transparent"}}>
+          
+        <Body>
+          <Text>
+          {item.name}
+          </Text>
+        </Body>
+
+      </CardItem>
+      </TouchableOpacity>
+      }
+      
+        keyExtractor={({uniqueId}, index) => uniqueId.toString()}
+      /> ) : null}
+      </Card> 
+
+  <TouchableOpacity
+        onPress={() => {
+          this.ShowHideComponent('snack')
+        }}
+   style={{
+      flexDirection: 'row',
+       alignItems:'center',
+       justifyContent:'space-between',
+        padding: 15,
+       backgroundColor:'white',
+       borderRadius:20,
+     }}
+ >
+   <Text style={{}}>Snack</Text>
+   <Icon name={this.state.snackIcon} style={{ fontSize: 30,}} />
+  </TouchableOpacity>
+
+  <Card transparent>{this.state.showSnack ? (
+  <FlatList
+        data={this.state.snack}
+        renderItem={({item}) => 
+        <TouchableOpacity onPress={() => this.selectFood(item.uniqueId)}>
+        <CardItem style={{backgroundColor: "transparent"}}>
+          
+        <Body>
+          <Text>
+          {item.name}
+          </Text>
+        </Body>
+
+      </CardItem>
+      </TouchableOpacity>
+      }
+      
+        keyExtractor={({uniqueId}, index) => uniqueId.toString()}
+      /> ) : null}
+      </Card> 
+
+  </View>
+
 
 
         </Content>
 
 
-
-
-   {/* <View style={{
- 
- flexDirection: 'row',
- flexWrap: "nowrap",
- justifyContent: 'center',
- alignItems: 'flex-end',
-
-}}>
-               <TouchableOpacity
-   style={{
-       borderWidth:1,
-       borderColor:'rgba(0,0,0,0.2)',
-       alignItems:'center',
-       justifyContent:'center',
-       width:70,
-       
-       height:70,
-       backgroundColor:'#fff',
-       borderRadius:100,
-     }}
- >
-   <Icon name="ios-add-circle" style={{color: "#01a699", fontSize: 30}} />
-  </TouchableOpacity>
-   </View> */}
-
-        {/* <View style={{
- 
-        flexDirection: 'row',
-        flexWrap: "nowrap",
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-
-      }}>
-        <TouchableOpacity
-        rounded
-              style={{
-                width: 70
-              }}
-                onPress={() => this.props.navigation.navigate('AddFood')}
-                >
-                
-            <Icon name="ios-add-circle" style={styles.iconStyle} />
-                    
-        </TouchableOpacity>
-        </View> */}
 
 
 
